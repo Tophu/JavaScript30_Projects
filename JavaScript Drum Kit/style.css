@@ -1,7 +1,9 @@
 html {
   font-size: 10px;
-  background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
+  background: url(https://images.pexels.com/photos/1626481/pexels-photo-1626481.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260)
+    bottom center;
   background-size: cover;
+  background-position-y: center;
 }
 
 body,
@@ -34,7 +36,7 @@ html {
 }
 
 .playing {
-  transform: scale(1.1);
+  transform: scale(1.2);
   border-color: #ffc600;
   box-shadow: 0 0 1rem #ffc600;
 }
