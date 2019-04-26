@@ -14,16 +14,24 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     context.strokeStyle = '#BADA55';
+    // Name of the hex colour ^^^
     context.lineJoin = 'round';
     context.lineCap = 'round';
+    context.lineWidth = 50;
+    context.globalCompositeOperation = 'color';
+    /* Like photoshop blend modes: multiply ,lighten, darken etc. ^^^
+    src = https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+    */
 
     let isDrawing = false;
     let lastX = 0;
     let lastY = 0;
-
+    let hue = 0;
+    let direction = true;
     function draw(e) {
       if (!isDrawing) return;
       console.log(e);
+      context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
       context.beginPath();
       context.moveTo(lastX, lastY);
       //start from 0 X&Y position from 'last'  ^^^ 
@@ -35,12 +43,36 @@
       // reassigning the variable to the offset^^^
       [lastX, lastY] = [e.offsetX, e.offsetY];
       // Easy way to reassign in one line called "destructuring an array" ^^^
+      hue++;
+      if (hue >= 360) {
+        hue = 0;
+        // if Hue is more or equal to 360, return Hue to 0 ^^^
+      }
+      if (context.lineWidth >= 80 || context.lineWidth <= 1) {
+        direction = !direction;
+        // if the line width of the stroke is more or equal to 80 then flip the direction OR less than 1, also flip the direction
+      }
+      if (direction) {
+        context.lineWidth++;
+        // depending on the direction the stroke will increment the width by 1
+      } else {
+        context.lineWidth--;
+        // otherwise it wil decrement the width by 1
+      }
     }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
 
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mousedown', () => isDrawing = true);
+    // when clicked ^^^
     canvas.addEventListener('mouseup', () => isDrawing = false);
+    // when not clicking ^^^
     canvas.addEventListener('mouseout', () => isDrawing = false);
+    // when going off the canvas ^^^
 
   </script>
 
